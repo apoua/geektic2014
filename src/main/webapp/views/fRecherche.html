@@ -1,0 +1,12 @@
+<form name="search"> 
+	<p> Veuillez indiquer le sexe des personnes à rechercher :<br /> 
+		<input type="radio" name="sexe" value="homme" id="homme" /> <label for="homme">Homme</label><br /> 
+		<input type="radio" name="sexe" value="femme" id="femme" /> <label for="femme">Femme</label><br /><br /> 
+	</p> 
+	<p> Cochez les centres d'intérets qui vous intéressent :<br/> 
+		<div ng-repeat="interet in listInterets">
+			<input type="checkbox" name="ckb_{{ interet }}" id="1" /> <label for="ckb_{{ interet }}">{{ interet }}</label><br /> 
+        </div>   
+	</p> 
+	<button ng-click="SearchProfile(search)">Rechercher</button> 
+ </form>
