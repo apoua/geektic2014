@@ -20,6 +20,14 @@ public class CentreInterets {
 		this.libelle = libelle;
 	}
 	
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	@ManyToMany(mappedBy="centreInterets")
 	private List<Utilisateur> utilisateurs;
 }

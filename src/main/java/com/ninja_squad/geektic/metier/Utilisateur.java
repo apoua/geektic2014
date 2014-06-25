@@ -32,7 +32,13 @@ public class Utilisateur {
 	public void setCentreInterets(List<CentreInterets> centreInterets) {
 		this.centreInterets = centreInterets;
 	}
-	
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getNom() {
 		return nom;
 	}

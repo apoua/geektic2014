@@ -1,7 +1,9 @@
 package com.ninja_squad.geektic.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,28 +25,29 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping("/utilisateur")
 public class UtilisateurService {
 	
-	private EntityManager em;
+	@Autowired
 	private UtilisateurDao dao;
-	private static EntityManagerFactory emFactory;
 	
 	public UtilisateurService() {
-		emFactory = Persistence.createEntityManagerFactory("GEEKTIC");
-		em = emFactory.createEntityManager();
-		dao = new UtilisateurDao(em);
 	}
 
-	@RequestMapping(value="/{id}", method = GET)
+	@RequestMapping(value="/afficher/{id}", method = GET)
 	public Utilisateur getUtlisateurById(@PathVariable("id") int id) {
 		return dao.findById(id);
 	}
 	
-	@RequestMapping(value="/list", method = GET)
+	@RequestMapping(value="/lister", method = GET)
 	public List<Utilisateur> getUtilisateurs() {
 		return dao.findAll();
 	}
 	
-	//@RequestMapping(value="/list", method = POST)
-	//public List<Utilisateur> getUtilisateursByCriteres(@RequestParam(required = false) String sexe, @RequestParam(required = false) List<String> interets) {
-	//	return dao.findAll();
-	//}
+	@RequestMapping(value="/rechercher/{sexe}/{listIdInterets}", method = GET)
+	public List<Utilisateur> getUtilisateursCriteres(@PathVariable("sexe") String sexe, @PathVariable("listIdInterets") String listIdInterets) {
+		String[] tabIdString = listIdInterets.split(",");
+		List<Integer> listIdInt = new ArrayList<Integer>();
+		for (String unId : tabIdString) {
+			listIdInt.add(Integer.parseInt(unId));
+		}
+		return dao.findByCriteria(sexe, listIdInt);
+	}
 }
